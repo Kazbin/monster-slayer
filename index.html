@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Monster Slayer</title>
+    <link rel="stylesheet" href="assets/css/bulma.css">
+    <style>
+        body {
+            padding-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container is-fluid" id="app">
+
+
+
+
+        <div class="columns">
+            <div class="column">
+                <article class="message is-success">
+                    <div class="message-header">
+                        <p>Player</p>
+
+                    </div>
+                    <div class="message-body">
+                        <progress class="progress is-danger is-large" :value="player.health" max="100">{{player.health}}%</progress>
+                    </div>
+                </article>
+            </div>
+            <div class="column">
+                <article class="message is-danger">
+                    <div class="message-header">
+                        <p>Monster</p>
+
+                    </div>
+                    <div class="message-body">
+                        <progress class="progress is-danger is-large" :value="monster.health" max="100">{{monster.health}}%</progress>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <article class="message">
+            <div class="message-header">
+                <p>Actions</p>
+
+            </div>
+            <div class="message-body">
+                <!-- The game state when we are not runnning-->
+                <template v-if="!gameIsRunning">
+                    <button class="button is-success is-large" @click="startGame">Start new Game</button>
+                </template>
+                <!-- While running the game-->
+                <template v-else>
+                    <button class="button is-danger" @click="makeMove('attack')">Attack</button>
+                    <button class="button is-warning" @click="makeMove('special')">Special Attack</button>
+                    <button class="button is-success" @click="makeMove('heal')">Heal</button>
+                    <button class="button is-dark is-outlined" @click="makeMove('surrender')">Give Up</button>
+                </template>
+            </div>
+        </article>
+        <article class="message" v-if="gameIsRunning">
+            <div class="message-header">
+                <p>Messages</p>
+
+            </div>
+            <div class="message-body">
+                <template v-for="item in logStack">
+                    <div class="notification" :class="item.color">
+                        {{item.message}}
+                    </div>
+                </template>
+            </div>
+        </article>
+
+    </div>
+
+    <script src="assets/vue/vue.js"></script>
+    <script src="assets/app/main.js"></script>
+</body>
+</html>
